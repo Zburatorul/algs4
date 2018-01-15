@@ -1,0 +1,26 @@
+must not use more than 48n + 192 bytes to store n items
+
+array of references to arrays = 8n+24
+array of longs storing their lengths = 8n + 24  or 4n+24 for ints
+
+but the problem is enq: 
+o   need new array, but of what length?
+o   resizing
+
+
+deq-ing
+o   randomizes the latest que
+o   if latest has length 1, do nothing
+o   if short, halve it
+
+enq-ing
+o   add to latest que, if full, double it
+o   if no latest que, need to create a new array, which means need to resize the array of references, and array of effective sizes.
+    cannot use a linked list instead of array of refs because dequing might become ~n if i have n arrays each of length 2
+
+at worst: a bunch of arrays of length 2 each
+
+n elements => n arrays, each of length 2; plus one array with their lengths, itself of length n.
+memory usage: 8n + 24 for array references,  8*2 + 24 for their contents, 8n + 24 for their lengths
+total   =   16n + 24 + 24 + 16 + 24
+
